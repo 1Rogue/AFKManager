@@ -14,7 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.rogue.afkmanager;
+package com.rogue.afkmanager.player;
+
+import org.bukkit.Location;
 
 /**
  *
@@ -24,6 +26,28 @@ package com.rogue.afkmanager;
  */
 public class LMPlayer {
     
+    private Long time;
+    private Location savedPlace;
     
+    public LMPlayer(Long tempTime, Location tempSavedPlace) {
+        time = tempTime;
+        savedPlace = tempSavedPlace;
+    }
+    
+    public void setTime(Long inTime) {
+        time = inTime;
+    }
+    
+    public void setSavedLocation(Location inLocation) {
+        savedPlace = inLocation;
+    }
+    
+    public Long getTime() {
+        return time;
+    }
+    
+    public Location getSavedLocation() {
+        return savedPlace;
+    }
 
 }
