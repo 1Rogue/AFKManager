@@ -30,38 +30,111 @@ public class PlayerHandler {
     
     private Map<String, LMPlayer> players = new HashMap<String, LMPlayer>();
     
+    /**
+     * Updates the AFK-start time for the provided player.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The relevant player's name
+     * @param time The time being AFK started
+     */
     public void updatePlayer(String name, Long time) {
         LMPlayer temp = this.getPlayer(name);
         temp.setTime(time);
         this.putPlayer(name, temp);
     }
     
+    /**
+     * Updates the AFK-start location for the provided player.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The relevant player's name
+     * @param place The place the player was at the start of being AFK
+     */
     public void updatePlayer(String name, Location place) {
         LMPlayer temp = this.getPlayer(name);
         temp.setSavedLocation(place);
         this.putPlayer(name, temp);
     }
     
+    /**
+     * Adds a player to the Plugin's tracked list of players.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The player name
+     * @param time The AFK-start time
+     * @param location The location when a player went AFK
+     */
     public void putPlayer(String name, Long time, Location location) {
-        LMPlayer temp = new LMPlayer(time, location);
-        players.put(name.toLowerCase().trim(), temp);
+        this.putPlayer(name.toLowerCase().trim(), new LMPlayer(time, location));
     }
+    
+    /**
+     * Adds an LMPlayer to the plugin's tracked list of players.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The player name
+     * @param player The LMPlayer object of the player
+     */
     public void putPlayer(String name, LMPlayer player) {
         players.put(name.toLowerCase().trim(), player);
     }
     
+    /**
+     * Removes a player from the plugin's tracked list of players
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The player name
+     */
     public void remPlayer(String name) {
         players.remove(name.toLowerCase().trim());
     }
     
+    /**
+     * Gets the plugin's instance of the player
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The player name
+     * @return The player instance
+     */
     public LMPlayer getPlayer(String name) {
         return players.get(name.toLowerCase().trim());
     }
     
+    /**
+     * Gets the time the player went AFK. 0 if they are not AFK.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The player name
+     * @return AFK Starting time for the player
+     */
     public Long checkTime(String name) {
         return this.getPlayer(name).getTime();
     }
     
+    /**
+     * Gets the location where the player went AFK. Returns null if they have
+     * never gone AFK.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The player name
+     * @return Location where a player went AFK
+     */
     public Location checkLocation(String name) {
         return this.getPlayer(name).getSavedLocation();
     }

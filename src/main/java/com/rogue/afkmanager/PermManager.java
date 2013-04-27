@@ -18,6 +18,7 @@ package com.rogue.afkmanager;
 
 import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -34,6 +35,16 @@ public class PermManager {
         vault = init;
     }
     
+    /**
+     * Checks if the player has the proper permission node.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param sender The command executor
+     * @param permission The permission node
+     * @return True if player has the permission node
+     */
     public boolean has (CommandSender sender, String permission) {
         if (vault) {
             // check perm
@@ -45,6 +56,33 @@ public class PermManager {
         return false;
     }
     
+    /**
+     * Checks if the player has the proper permission node.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param player A player object to check
+     * @param permission The permission node
+     * @return True if player has the permission node
+     */
+    public boolean has (Player player, String permission) {
+        if (vault) {
+            // check perm
+            AFKManager.getPlugin().getLogger().log(Level.INFO, "Vault is enabled!");
+        }
+        if (player.hasPermission(permission)) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Vault's method for loading permissions
+     * 
+     * @since 0.1
+     * @version 0.1
+     */
     /*private void setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();

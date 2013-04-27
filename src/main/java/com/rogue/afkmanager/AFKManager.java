@@ -33,7 +33,13 @@ public class AFKManager extends JavaPlugin {
 
     private PermManager perms;
     private Configuration configs;
-
+    
+    /**
+     * Loads config files and checks for updates on server loading.
+     * 
+     * @since 0.1
+     * @version 0.1
+     */
     @Override
     public void onLoad() {
         configs = new Configuration();
@@ -44,21 +50,50 @@ public class AFKManager extends JavaPlugin {
         }
     }
 
+    /**
+     * Creates an instance of the permissions manager for AFKManager.
+     * 
+     * @since 0.1
+     * @version 0.1
+     */
     @Override
     public void onEnable() {
         perms = new PermManager(this.getServer().getPluginManager().getPlugin("Vault").isEnabled());
         this.getLogger().log(Level.INFO, "{0} is enabled!", this.getName());
     }
-
+    
+    /**
+     * Currently serves no purpose, will most likely stop the AFK runnable in
+     * the future.
+     * 
+     * @since 0.1
+     * @version 0.1
+     */
     @Override
     public void onDisable() {
         this.getLogger().log(Level.INFO, "{0} is disabled!", this.getName());
     }
-
+    
+    /**
+     * Gets the instance of the plugin in its entirety.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return The plugin instance
+     */
     public static Plugin getPlugin() {
         return Bukkit.getServer().getPluginManager().getPlugin("SayFixer");
     }
-
+    
+    /**
+     * Gets the instance of the permissions manager.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return AFKManager's permissions manager
+     */
     public PermManager getPermManager() {
         return perms;
     }

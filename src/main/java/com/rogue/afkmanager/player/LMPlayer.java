@@ -26,28 +26,60 @@ import org.bukkit.Location;
  */
 public class LMPlayer {
     
-    private Long time;
-    private Location savedPlace;
+    private Long theTime = null;
+    private Location theSavedPlace = null;
     
-    public LMPlayer(Long tempTime, Location tempSavedPlace) {
-        time = tempTime;
-        savedPlace = tempSavedPlace;
+    public LMPlayer(Long time, Location location) {
+        theTime = time;
+        theSavedPlace = location;
     }
     
-    public void setTime(Long inTime) {
-        time = inTime;
+    /**
+     * Sets the player's starting AFK time.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param time The supplied time
+     */
+    public void setTime(Long time) {
+        theTime = time;
     }
     
-    public void setSavedLocation(Location inLocation) {
-        savedPlace = inLocation;
+    /**
+     * Sets the player's location at the time of going AFK.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param location The saved location
+     */
+    public void setSavedLocation(Location location) {
+        theSavedPlace = location;
     }
     
+    /**
+     * Gets the player's starting AFK time.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return Starting AFK time
+     */
     public Long getTime() {
-        return time;
+        return theTime;
     }
     
+    /**
+     * Gets the player's location at the time of going AFK.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return The saved location
+     */
     public Location getSavedLocation() {
-        return savedPlace;
+        return theSavedPlace;
     }
 
 }

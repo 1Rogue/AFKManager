@@ -37,8 +37,21 @@ public class CommandHandler implements CommandExecutor {
         Afk afk = new Afk();
         commands.put(afk.getName().toLowerCase().trim(), afk);
     }
-
-    public boolean onCommand(CommandSender cs, Command cmd, String string, String[] strings) {
+    
+    /**
+     * Main executor of commands. Grabs the appropriate command and executes it.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param cs The command executor
+     * @param cmd The command instance
+     * @param string The label of the command
+     * @param args The command arguments
+     * 
+     * @return Command success
+     */
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         
         LMCommand exec = commands.get(cmd.getName().toLowerCase().trim());
         return false;

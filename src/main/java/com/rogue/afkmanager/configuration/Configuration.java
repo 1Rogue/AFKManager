@@ -36,7 +36,14 @@ public class Configuration {
         config = AFKManager.getPlugin().getConfig();
         configPath = new File(AFKManager.getPlugin().getDataFolder(), "config.yml");
     }
-
+    
+    /**
+     * Checks the validity of the config file, and if it exists. This will make
+     * sure the config is in the data folder.
+     * 
+     * @since 0.1
+     * @version 0.1
+     */
     public void loadDefaults() {
         if (!configPath.exists()) {
             AFKManager.getPlugin().saveDefaultConfig();
@@ -52,11 +59,29 @@ public class Configuration {
             AFKManager.getPlugin().getLogger().log(Level.SEVERE, null, e);
         }
     }
-
+    
+    /**
+     * Gets a string value from the YAML config file.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param path The path to the string value, using dots as delimiters
+     * @return The string's value
+     */
     public String getString(String path) {
         return config.getString(path, null);
     }
-
+    
+    /**
+     * Gets a boolean value from the YAML config file.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param path The path to the boolean value, using dots as delimiters
+     * @return The boolean's value
+     */
     public boolean getBoolean(String path) {
         return config.getBoolean(path);
     }
