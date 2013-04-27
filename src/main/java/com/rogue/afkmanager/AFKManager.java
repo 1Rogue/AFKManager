@@ -31,29 +31,26 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class AFKManager extends JavaPlugin {
     
-    private Logger log;
     private PermManager perms;
     private Configuration configs;
     
     @Override
     public void onLoad() {
-        log = this.getLogger();
+        configs = new Configuration();
+        configs.loadDefaults();
+        
         
     }
     
     @Override
     public void onEnable() {
         perms = new PermManager(this.getServer().getPluginManager().getPlugin("Vault").isEnabled());
-        this.getLog().log(Level.INFO, "{0} is enabled!", this.getName());
+        this.getLogger().log(Level.INFO, "{0} is enabled!", this.getName());
     }
     
     @Override
     public void onDisable() {
-        this.getLog().log(Level.INFO, "{0} is disabled!", this.getName());
-    }
-    
-    public Logger getLog() {
-        return log;
+        this.getLogger().log(Level.INFO, "{0} is disabled!", this.getName());
     }
     
     public static Plugin getPlugin() {
