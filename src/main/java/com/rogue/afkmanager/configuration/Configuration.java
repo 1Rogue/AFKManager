@@ -41,14 +41,11 @@ public class Configuration {
         if (!configPath.exists()) {
             AFKManager.getPlugin().saveDefaultConfig();
         }
-        
-        if (!config.contains("command.say.player")) {
-            config.set("command.say.player", "'&d[Server] %msg'");
-        }
-        if (!config.contains("command.say.console")) {
-            config.set("command.say.console", "'&d[Server] %msg'");
-        }
 
+        if (!config.contains("update-check")) {
+            config.set("update-check", true);
+        }
+        
         try {
             config.save(configPath);
         } catch (IOException e) {
@@ -58,5 +55,9 @@ public class Configuration {
 
     public String getString(String path) {
         return config.getString(path, null);
+    }
+
+    public boolean getBoolean(String path) {
+        return config.getBoolean(path);
     }
 }
