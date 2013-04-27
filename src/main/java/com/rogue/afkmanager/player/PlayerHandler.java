@@ -138,5 +138,15 @@ public class PlayerHandler {
     public Location checkLocation(String name) {
         return this.getPlayer(name).getSavedLocation();
     }
+    
+    /**
+     * Sets whether or not the player is AFK.
+     * 
+     * @param name The player name
+     * @param value Whether or not the player is AFK
+     */
+    public void changeAFK(String name, boolean value) {
+        this.getPlayer(name).setAFK(value);
+    }
 
 }

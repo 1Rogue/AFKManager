@@ -28,6 +28,7 @@ public class LMPlayer {
     
     private Long theTime = null;
     private Location theSavedPlace = null;
+    private boolean afk = false;
     
     public LMPlayer(Long time, Location location) {
         theTime = time;
@@ -80,6 +81,30 @@ public class LMPlayer {
      */
     public Location getSavedLocation() {
         return theSavedPlace;
+    }
+    
+    /**
+     * Sets whether or not the player is AFK.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param value Value to set AFK for
+     */
+    public void setAFK(boolean value) {
+        afk = value;
+    }
+    
+    /**
+     * Returns whether or not the player is AFK.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return AFK status
+     */
+    public boolean isAFK() {
+        return afk;
     }
 
 }
