@@ -16,6 +16,7 @@
  */
 package com.rogue.afkmanager;
 
+import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -36,12 +37,17 @@ public class PermManager {
     public boolean has (CommandSender sender, String permission) {
         if (vault) {
             // check perm
-            return true;
+            AFKManager.getPlugin().getLogger().log(Level.INFO, "Vault is enabled!");
         }
-        else if (sender.hasPermission(permission)) {
+        if (sender.hasPermission(permission)) {
             return true;
         }
         return false;
     }
+    
+    /*private void setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = Bukkit.getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+    }*/
 
 }
