@@ -1,0 +1,7 @@
+main: com.rogue.afkmanager.AFKManager
+name: ${project.name}
+prefix: AFKM
+description: Manager for AFK Players and actions for them
+version: ${project.version}
+author: 1Rogue
+website: https://github.com/1Rogue
