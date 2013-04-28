@@ -16,6 +16,7 @@
  */
 package com.rogue.afkmanager;
 
+import com.rogue.afkmanager.permission.PermManager;
 import com.rogue.afkmanager.command.CommandHandler;
 import com.rogue.afkmanager.configuration.Configuration;
 import com.rogue.afkmanager.listener.AFKListener;
@@ -23,7 +24,6 @@ import com.rogue.afkmanager.player.PlayerHandler;
 import com.rogue.afkmanager.runnable.UpdateRunnable;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,7 +37,7 @@ public class AFKManager extends JavaPlugin {
     private PermManager perms;
     private Configuration configs;
     private AFKListener listener;
-    protected PlayerHandler phandle;
+    private PlayerHandler phandle;
     private CommandHandler chandle;
     
     /**
