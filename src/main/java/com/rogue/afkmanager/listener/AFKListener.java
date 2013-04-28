@@ -58,7 +58,7 @@ public class AFKListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         LMPlayer player = AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName());
@@ -80,16 +80,6 @@ public class AFKListener implements Listener {
         AFKManager.getPlugin().getPlayerHandler().remPlayer(e.getPlayer().getName());
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onPlayerKick(PlayerKickEvent e) {
-        LMPlayer player = AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName());
-        if (player.isAFK()) {
-            Location back = player.getSavedLocation();
-            e.getPlayer().teleport(back);
-        }
-        AFKManager.getPlugin().getPlayerHandler().remPlayer(e.getPlayer().getName());
-    }
-    
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent e) {
         AFKManager.getPlugin().getPlayerHandler().putPlayer(e.getPlayer().getName(), 0, e.getPlayer().getLocation());
