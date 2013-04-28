@@ -18,6 +18,8 @@ package com.rogue.afkmanager.listener;
 
 import com.rogue.afkmanager.AFKManager;
 import com.rogue.afkmanager.player.LMPlayer;
+import com.rogue.afkmanager.utils.Utils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,7 +44,18 @@ public class AFKListener implements Listener {
     
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerActivity(PlayerMoveEvent e) {
-        
+        LMPlayer player = AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName());
+        if (player.isAFK()) {
+            if (Utils.compare(e.getPlayer().getLocation(), player.getSavedLocation())) {
+                e.getPlayer().sendMessage(ChatColor.YELLOW + "You are currently AFK. Move around to leave this area.");
+            }
+            else {
+                e.getPlayer().teleport(player.getSavedLocation());
+                e.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting back.");
+                player = new LMPlayer(Long.valueOf(0), player.getSavedLocation());
+                AFKManager.getPlugin().getPlayerHandler().putPlayer(e.getPlayer().getName(), player);
+            }
+        }
     }
     
     @EventHandler(priority = EventPriority.NORMAL)
