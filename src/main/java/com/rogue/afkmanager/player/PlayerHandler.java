@@ -17,7 +17,6 @@
 package com.rogue.afkmanager.player;
 
 import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.Location;
 
 /**
@@ -28,7 +27,7 @@ import org.bukkit.Location;
  */
 public class PlayerHandler {
     
-    private Map<String, LMPlayer> players = new HashMap<String, LMPlayer>();
+    private HashMap<String, LMPlayer> players = new HashMap<String, LMPlayer>();
     
     /**
      * Updates the AFK-start time for the provided player.
@@ -39,7 +38,7 @@ public class PlayerHandler {
      * @param name The relevant player's name
      * @param time The time being AFK started
      */
-    public void updatePlayer(String name, Long time) {
+    public void updatePlayer(String name, int time) {
         LMPlayer temp = this.getPlayer(name);
         temp.setTime(time);
         this.putPlayer(name, temp);
@@ -70,8 +69,8 @@ public class PlayerHandler {
      * @param time The AFK-start time
      * @param location The location when a player went AFK
      */
-    public void putPlayer(String name, Long time, Location location) {
-        this.putPlayer(name.toLowerCase().trim(), new LMPlayer(time, location));
+    public void putPlayer(String name, int time, Location location) {
+        this.putPlayer(name.toLowerCase().trim(), new LMPlayer(name.toLowerCase().trim(), time, location));
     }
     
     /**
@@ -121,7 +120,7 @@ public class PlayerHandler {
      * @param name The player name
      * @return AFK Starting time for the player
      */
-    public Long checkTime(String name) {
+    public int checkTime(String name) {
         return this.getPlayer(name).getTime();
     }
     
@@ -142,11 +141,26 @@ public class PlayerHandler {
     /**
      * Sets whether or not the player is AFK.
      * 
+     * @since 0.1
+     * @version 0.1
+     * 
      * @param name The player name
      * @param value Whether or not the player is AFK
      */
     public void changeAFK(String name, boolean value) {
         this.getPlayer(name).setAFK(value);
+    }
+    
+    /**
+     * Returns the map of all LMPlayers.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return Map of LMPlayers players
+     */
+    public HashMap<String, LMPlayer> getPlayers() {
+        return players;
     }
 
 }

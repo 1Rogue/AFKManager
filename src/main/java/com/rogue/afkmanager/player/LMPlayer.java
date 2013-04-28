@@ -26,11 +26,13 @@ import org.bukkit.Location;
  */
 public class LMPlayer {
     
-    private Long theTime = null;
+    private String theName = "";
+    private int theTime = 0;
     private Location theSavedPlace = null;
     private boolean afk = false;
     
-    public LMPlayer(Long time, Location location) {
+    public LMPlayer(String name, int time, Location location) {
+        theName = name;
         theTime = time;
         theSavedPlace = location;
     }
@@ -43,7 +45,7 @@ public class LMPlayer {
      * 
      * @param time The supplied time
      */
-    public void setTime(Long time) {
+    public void setTime(int time) {
         theTime = time;
     }
     
@@ -67,7 +69,7 @@ public class LMPlayer {
      * 
      * @return Starting AFK time
      */
-    public Long getTime() {
+    public int getTime() {
         return theTime;
     }
     
@@ -105,6 +107,18 @@ public class LMPlayer {
      */
     public boolean isAFK() {
         return afk;
+    }
+    
+    /**
+     * Gets the name value for the player.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return The name of the player
+     */
+    public String getName() {
+        return theName;
     }
 
 }

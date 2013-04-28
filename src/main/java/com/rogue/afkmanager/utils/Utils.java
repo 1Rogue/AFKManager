@@ -25,6 +25,12 @@ import org.bukkit.Location;
  */
 public class Utils {
     
+    private static Threaded thread;
+    
+    public Utils() {
+        thread = new Threaded();
+    }
+    
     /**
      * Compares two locations
      * 
@@ -37,5 +43,23 @@ public class Utils {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Compares two locations strictly
+     * 
+     * @param one First Location
+     * @param two Second Location
+     * @return True if locations are the same
+     */
+    public static boolean strictCompare(Location one, Location two) {
+        if ((Math.abs(one.getX() - two.getX()) < 1) && (Math.abs(one.getY() - two.getY()) < 0.5D) && (Math.abs(one.getZ() - two.getZ()) < 1)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static Threaded threaded() {
+        return thread;
     }
 }

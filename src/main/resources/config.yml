@@ -1,1 +1,30 @@
+##
+##  Configuration explained
+##         --------
+##
+##  update-check: Whether or not to check for newer versions
+##
+##  afk:
+##    check-interval: How often to check for afk players (in seconds).
+##    timeout: How long until the player is marked AFK (in seconds).
+##    random:
+##      enabled: Whether spawning in a random variation of the area is enabled.
+##      radius: The radius that AFK-ers randomly teleport from the AFK point.
+##    location: Everything related to the afk point, can be set in-game.
+##      worldguard: Currently not implemented, will support wg regions soon.
+##
 update-check: true
+afk:
+  check-interval: 30
+  timeout: 900
+  random:
+    enabled: true
+    radius: 10
+  location:
+    x: 0.0
+    y: 80.0
+    z: 0.0
+    world: world
+    worldguard:
+      enabled: false
+      region-name: null

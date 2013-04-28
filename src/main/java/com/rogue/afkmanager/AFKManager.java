@@ -21,6 +21,7 @@ import com.rogue.afkmanager.command.CommandHandler;
 import com.rogue.afkmanager.configuration.Configuration;
 import com.rogue.afkmanager.listener.AFKListener;
 import com.rogue.afkmanager.player.PlayerHandler;
+import com.rogue.afkmanager.runnable.AFKRunnable;
 import com.rogue.afkmanager.runnable.UpdateRunnable;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
@@ -60,7 +61,8 @@ public class AFKManager extends JavaPlugin {
     }
 
     /**
-     * Creates an instance of the permissions manager and listener.
+     * Creates an instance of the permissions manager, listener, player handler,
+     * command handler, and sets the AFK checking task.
      * 
      * @since 0.1
      * @version 0.1
@@ -79,6 +81,10 @@ public class AFKManager extends JavaPlugin {
         
         this.getLogger().log(Level.INFO, "Enabling Command Handler");
         chandle = new CommandHandler();
+        
+        long interval = this.getConfig().getInt("afk.check-interval") * 20; // multiplied by 20, due to a server tick being 1/20th of a second
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new AFKRunnable(), interval, interval);
+        
         this.getLogger().log(Level.INFO, "{0} is enabled!", this.getName());
     }
     
@@ -152,5 +158,17 @@ public class AFKManager extends JavaPlugin {
      */
     public CommandHandler getCommandHandler() {
         return chandle;
+    }
+    
+    /**
+     * Gets the instance of the configuration
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return The plugin's configuration manager
+     */
+    public Configuration getConfiguration() {
+        return configs;
     }
 }

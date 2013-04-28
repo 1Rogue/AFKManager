@@ -38,36 +38,13 @@ public class Configuration {
     }
     
     /**
-     * Checks the validity of the config file, and if it exists. This will make
-     * sure the config is in the data folder.
-     * 
-     * @since 0.1
-     * @version 0.1
-     */
-    public void loadDefaults() {
-        if (!configPath.exists()) {
-            AFKManager.getPlugin().saveDefaultConfig();
-        }
-
-        if (!config.contains("update-check")) {
-            config.set("update-check", true);
-        }
-        
-        try {
-            config.save(configPath);
-        } catch (IOException e) {
-            AFKManager.getPlugin().getLogger().log(Level.SEVERE, null, e);
-        }
-    }
-    
-    /**
-     * Gets a string value from the YAML config file.
+     * Gets a String value from the YAML config file.
      * 
      * @since 0.1
      * @version 0.1
      * 
-     * @param path The path to the string value, using dots as delimiters
-     * @return The string's value
+     * @param path The path to the String value, using dots as delimiters
+     * @return The String's value
      */
     public String getString(String path) {
         return config.getString(path, null);
@@ -84,5 +61,95 @@ public class Configuration {
      */
     public boolean getBoolean(String path) {
         return config.getBoolean(path);
+    }
+    
+    /**
+     * Gets an int value from the YAML config file.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param path The path to the int value, using dots as delimiters
+     * @return The int's value
+     */
+    public int getInt(String path) {
+        return config.getInt(path);
+    }
+    
+    /**
+     * Gets an double value from the YAML config file.
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param path The path to the double value, using dots as delimiters
+     * @return The double's value
+     */
+    public double getDouble(String path) {
+        return config.getDouble(path);
+    }
+    
+    /**
+     * Saves the configuration currently loaded in memory.
+     * 
+     * @since 0.1
+     * @version 0.1
+     */
+    public void saveFile() {
+        try {
+            config.save(configPath);
+        } catch (IOException e) {
+            AFKManager.getPlugin().getLogger().log(Level.SEVERE, null, e);
+        }
+    }
+    
+    /**
+     * Checks the validity of the config file, and if it exists. This will make
+     * sure the config is in the data folder.
+     * 
+     * @since 0.1
+     * @version 0.1
+     */
+    public void loadDefaults() {
+        if (!configPath.exists()) {
+            AFKManager.getPlugin().saveDefaultConfig();
+        }
+
+        if (!config.contains("update-check")) {
+            config.set("update-check", true);
+        }
+        if (!config.contains("afk.check-interval")) {
+            config.set("afk.check-interval", 20);
+        }
+        if (!config.contains("afk.timeout")) {
+            config.set("afk.timeout", 900);
+        }
+        if (!config.contains("afk.random.enabled")) {
+            config.set("afk.random.enabled", true);
+        }
+        if (!config.contains("afk.random.radius")) {
+            config.set("afk.random.radius", 10);
+        }
+        if (!config.contains("afk.location.x")) {
+            config.set("afk.location.x", 0.0);
+        }
+        if (!config.contains("afk.location.y")) {
+            config.set("afk.location.y", 80.0);
+        }
+        if (!config.contains("afk.location.z")) {
+            config.set("afk.location.z", 0.0);
+        }
+        if (!config.contains("afk.location.world")) {
+            config.set("afk.location.world", "world");
+        }
+        if (!config.contains("afk.location.worldguard.enabled")) {
+            config.set("afk.location.worldguard.enabled", false);
+        }
+        if (!config.contains("afk.location.worldguard.region-name")) {
+            config.set("afk.location.worldguard.region-name", null);
+        }
+        
+        
+        this.saveFile();
     }
 }

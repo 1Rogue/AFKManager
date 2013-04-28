@@ -24,6 +24,8 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -35,29 +37,39 @@ import org.bukkit.event.player.PlayerQuitEvent;
  * @version 0.1
  */
 public class AFKListener implements Listener {
-    
+
     protected final AFKManager plugin;
-    
+
     public AFKListener(AFKManager main) {
         this.plugin = main;
     }
-    
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerActivity(PlayerMoveEvent e) {
         LMPlayer player = AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName());
         if (player.isAFK()) {
-            if (Utils.compare(e.getPlayer().getLocation(), player.getSavedLocation())) {
+            if (Utils.compare(e.getPlayer().getLocation(), null/*TODO: Needs to be the set area that the player/config specified*/)) {
                 e.getPlayer().sendMessage(ChatColor.YELLOW + "You are currently AFK. Move around to leave this area.");
-            }
-            else {
+            } else {
                 e.getPlayer().teleport(player.getSavedLocation());
                 e.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting back.");
-                player = new LMPlayer(Long.valueOf(0), player.getSavedLocation());
-                AFKManager.getPlugin().getPlayerHandler().putPlayer(e.getPlayer().getName(), player);
+                AFKManager.getPlugin().getPlayerHandler().putPlayer(e.getPlayer().getName(), 0, player.getSavedLocation());
+                AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName()).setAFK(false);
             }
         }
     }
     
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerChat(AsyncPlayerChatEvent e) {
+        LMPlayer player = AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName());
+        if (player.isAFK()) {
+            e.getPlayer().teleport(player.getSavedLocation());
+            e.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting back.");
+            AFKManager.getPlugin().getPlayerHandler().putPlayer(e.getPlayer().getName(), 0, player.getSavedLocation());
+            AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName()).setAFK(false);
+        }
+    }
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerLogout(PlayerQuitEvent e) {
         LMPlayer player = AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName());
@@ -78,5 +90,8 @@ public class AFKListener implements Listener {
         AFKManager.getPlugin().getPlayerHandler().remPlayer(e.getPlayer().getName());
     }
     
-
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        AFKManager.getPlugin().getPlayerHandler().putPlayer(e.getPlayer().getName(), 0, e.getPlayer().getLocation());
+    }
 }
