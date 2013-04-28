@@ -7,6 +7,10 @@
             <id>vault-repo</id>
             <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
         </repository>
+        <repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/repositories/releases/</url>
+        </repository>
     </repositories>
 
     <groupId>com.rogue</groupId>
@@ -30,7 +34,8 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.5.1-R0.1-20130330.042956-16</version>
+            <version>1.5.1-R0.1</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>
