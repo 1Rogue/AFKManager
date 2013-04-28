@@ -34,6 +34,9 @@ public class Utils {
     /**
      * Compares two locations
      * 
+     * @since 0.1
+     * @version 0.1
+     * 
      * @param one First Location
      * @param two Second Location
      * @return True if locations are the same
@@ -48,6 +51,9 @@ public class Utils {
     /**
      * Compares two locations strictly
      * 
+     * @since 0.1
+     * @version 0.1
+     * 
      * @param one First Location
      * @param two Second Location
      * @return True if locations are the same
@@ -59,6 +65,14 @@ public class Utils {
         return false;
     }
     
+    /**
+     * Gets a class of thread-safe methods for Bukkit
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @return Threaded class
+     */
     public static Threaded threaded() {
         return thread;
     }

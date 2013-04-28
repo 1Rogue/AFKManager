@@ -139,8 +139,8 @@ public class Configuration {
         if (!config.contains("afk.location.z")) {
             config.set("afk.location.z", 0.0);
         }
-        if (!config.contains("afk.location.world")) {
-            config.set("afk.location.world", "world");
+        if (!config.contains("afk.location.world-name")) {
+            config.set("afk.location.world-name", "world");
         }
         if (!config.contains("afk.location.worldguard.enabled")) {
             config.set("afk.location.worldguard.enabled", false);

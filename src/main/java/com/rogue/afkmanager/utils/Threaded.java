@@ -35,12 +35,21 @@ public class Threaded {
      * @version 0.1
      * 
      * @param name The player name
-     * @return The player objects
+     * @return The player object
      */
     public Player getPlayer(String name) {
         return Bukkit.getServer().getPlayer(name);
     }
     
+    /**
+     * Gets the Bukkit instance of a World
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The world name
+     * @return The world object
+     */
     public World getWorld(String name) {
         return Bukkit.getServer().getWorld(name);
     }
