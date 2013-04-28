@@ -22,7 +22,9 @@ import com.rogue.afkmanager.player.LMPlayer;
 import com.rogue.afkmanager.utils.Utils;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -33,31 +35,28 @@ import org.bukkit.entity.Player;
  * @version 0.1
  */
 public class AFKRunnable implements Runnable {
-    
-    private HashMap<String, LMPlayer> people;
-    
+
     public AFKRunnable() {
-        people = AFKManager.getPlugin().getPlayerHandler().getPlayers();
     }
-    
+
     /**
      * The executable for checking all players for being AFK.
-     * 
+     *
      * @since 0.1
      * @version 0.1
      */
     public void run() {
         // This is all a giant mess of code
         // Forgive me for my sins
-        Collection<LMPlayer> players = people.values();
+        //From Ralex: DEAR GOD HELP ME I AM TRAPPED IN THIS CODE
+        Map<String, LMPlayer> people = AFKManager.getPlugin().getPlayerHandler().getPlayers();
         Configuration config = AFKManager.getPlugin().getConfiguration();
-        for (LMPlayer play : players) {
-           Player p = Utils.threaded().getPlayer(play.getName());
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            LMPlayer play = people.get(p.getName().toLowerCase().trim());
             if (!play.isAFK()) { //If not AFK
                 if (!Utils.strictCompare(play.getSavedLocation(), p.getLocation())) { // If not the same location when last checked
                     play.setSavedLocation(p.getLocation()); // Set the saved location as the current
-                }
-                else {
+                } else {
                     //This is the especially bad part. Have fun.
                     if (play.getTime() >= config.getInt("afk.timeout")) {
                         play.setSavedLocation(p.getLocation());
@@ -65,28 +64,24 @@ public class AFKRunnable implements Runnable {
                             Random gen = new Random();
                             int rad = config.getInt("afk.random.radius");
                             p.teleport(new Location(Utils.threaded().getWorld(config.getString("afk.location.world-name")),
-                                    gen.nextInt(rad - (rad*2)) + config.getDouble("afk.location.x"),
+                                    gen.nextInt(rad - (rad * 2)) + config.getDouble("afk.location.x"),
                                     config.getDouble("afk.location.x"),
-                                    gen.nextInt(rad - (rad*2)) + config.getDouble("afk.location.z")));
-                        }
-                        else {
+                                    gen.nextInt(rad - (rad * 2)) + config.getDouble("afk.location.z")));
+                        } else {
                             p.teleport(new Location(
                                     Utils.threaded().getWorld(config.getString("afk.location.world-name")),
                                     config.getDouble("afk.location.x"),
                                     config.getDouble("afk.location.y"),
                                     config.getDouble("afk.location.z")));
                         }
-                    }
-                    else {
+                    } else {
                         play.setTime(play.getTime() + config.getInt("afk.check-interval"));
                     }
                 }
                 AFKManager.getPlugin().getPlayerHandler().putPlayer(play.getName(), play);
-            }
-            else {
-                Utils.threaded().getPlayer(play.getName()).sendMessage("You are currently AFK");
+            } else {
+                p.sendMessage("You are currently AFK");
             }
         }
     }
-
 }
