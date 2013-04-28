@@ -8,9 +8,9 @@
             <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
         </repository>
         <repository>
-+            <id>bukkit-repo</id>
-+            <url>http://repo.bukkit.org/content/repositories/releases/</url>
-+        </repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/repositories/releases/</url>
+        </repository>
     </repositories>
 
     <groupId>com.rogue</groupId>
