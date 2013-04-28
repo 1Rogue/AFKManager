@@ -22,11 +22,8 @@ import com.rogue.afkmanager.player.LMPlayer;
 import com.rogue.afkmanager.utils.Utils;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
@@ -67,14 +64,14 @@ public class AFKRunnable implements Runnable {
                         if (config.getBoolean("afk.random.enabled")) {
                             Random gen = new Random();
                             int rad = config.getInt("afk.random.radius");
-                            p.teleport(new Location(Utils.threaded().getWorld(config.getString("afk.location.world")),
+                            p.teleport(new Location(Utils.threaded().getWorld(config.getString("afk.location.world-name")),
                                     gen.nextInt(rad - (rad*2)) + config.getDouble("afk.location.x"),
                                     config.getDouble("afk.location.x"),
                                     gen.nextInt(rad - (rad*2)) + config.getDouble("afk.location.z")));
                         }
                         else {
                             p.teleport(new Location(
-                                    Utils.threaded().getWorld(config.getString("afk.location.world")),
+                                    Utils.threaded().getWorld(config.getString("afk.location.world-name")),
                                     config.getDouble("afk.location.x"),
                                     config.getDouble("afk.location.y"),
                                     config.getDouble("afk.location.z")));
@@ -90,7 +87,6 @@ public class AFKRunnable implements Runnable {
                 Utils.threaded().getPlayer(play.getName()).sendMessage("You are currently AFK");
             }
         }
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
