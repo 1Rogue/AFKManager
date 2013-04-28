@@ -47,12 +47,12 @@ public class AFKListener implements Listener {
     
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerLogout(PlayerQuitEvent e) {
-        /*if (LMPlayer.isAFK(event.getPlayer())) {
-            Location back = LMPlayer.getSavedPlace(event.getPlayer());
-            event.getPlayer().teleport(back);
+        LMPlayer player = AFKManager.getPlugin().getPlayerHandler().getPlayer(e.getPlayer().getName());
+        if (player.isAFK()) {
+            Location back = player.getSavedLocation();
+            e.getPlayer().teleport(back);
         }
-        LMPlayer.removeTime(event.getPlayer());
-        LMPlayer.removeAFK(event.getPlayer());*/
+        AFKManager.getPlugin().getPlayerHandler().remPlayer(e.getPlayer().getName());
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
