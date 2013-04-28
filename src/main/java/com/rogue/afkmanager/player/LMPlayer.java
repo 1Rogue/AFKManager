@@ -25,100 +25,99 @@ import org.bukkit.Location;
  * @version 0.1
  */
 public class LMPlayer {
-    
+
     private String theName = "";
     private int theTime = 0;
     private Location theSavedPlace = null;
     private boolean afk = false;
-    
+
     public LMPlayer(String name, int time, Location location) {
         theName = name;
         theTime = time;
         theSavedPlace = location;
     }
-    
+
     /**
      * Sets the player's starting AFK time.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @param time The supplied time
      */
     public void setTime(int time) {
         theTime = time;
     }
-    
+
     /**
      * Sets the player's location at the time of going AFK.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @param location The saved location
      */
     public void setSavedLocation(Location location) {
         theSavedPlace = location;
     }
-    
+
     /**
      * Gets the player's starting AFK time.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @return Starting AFK time
      */
     public int getTime() {
         return theTime;
     }
-    
+
     /**
      * Gets the player's location at the time of going AFK.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @return The saved location
      */
     public Location getSavedLocation() {
         return theSavedPlace;
     }
-    
+
     /**
      * Sets whether or not the player is AFK.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @param value Value to set AFK for
      */
     public void setAFK(boolean value) {
         afk = value;
     }
-    
+
     /**
      * Returns whether or not the player is AFK.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @return AFK status
      */
     public boolean isAFK() {
         return afk;
     }
-    
+
     /**
      * Gets the name value for the player.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @return The name of the player
      */
     public String getName() {
         return theName;
     }
-
 }
