@@ -16,7 +16,6 @@
  */
 package com.rogue.afkmanager;
 
-import com.rogue.afkmanager.permission.PermManager;
 import com.rogue.afkmanager.command.CommandHandler;
 import com.rogue.afkmanager.configuration.Configuration;
 import com.rogue.afkmanager.listener.AFKListener;
@@ -35,7 +34,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class AFKManager extends JavaPlugin {
 
-    private PermManager perms;
     private Configuration configs;
     private AFKListener listener;
     private PlayerHandler phandle;
@@ -73,9 +71,6 @@ public class AFKManager extends JavaPlugin {
         listener = new AFKListener(this);
         Bukkit.getPluginManager().registerEvents(listener, this);
 
-        this.getLogger().log(Level.INFO, "Enabling Permissions");
-        perms = new PermManager(this.getServer().getPluginManager().getPlugin("Vault").isEnabled());
-
         this.getLogger().log(Level.INFO, "Enabling Player Handler");
         phandle = new PlayerHandler();
 
@@ -110,18 +105,6 @@ public class AFKManager extends JavaPlugin {
      */
     public static AFKManager getPlugin() {
         return (AFKManager) Bukkit.getServer().getPluginManager().getPlugin("AFKManager");
-    }
-
-    /**
-     * Gets the instance of the permissions manager.
-     *
-     * @since 0.1
-     * @version 0.1
-     *
-     * @return AFKManager's permissions manager
-     */
-    public PermManager getPermManager() {
-        return perms;
     }
 
     /**

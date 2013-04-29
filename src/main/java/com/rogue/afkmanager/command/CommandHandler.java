@@ -30,31 +30,32 @@ import org.bukkit.command.CommandSender;
  * @version 0.1
  */
 public class CommandHandler implements CommandExecutor {
-    
+
     protected final Map<String, LMCommand> commands = new HashMap<String, LMCommand>();
-    
+
     public CommandHandler() {
         Afk afk = new Afk();
         commands.put(afk.getName().toLowerCase().trim(), afk);
     }
-    
+
     /**
      * Main executor of commands. Grabs the appropriate command and executes it.
-     * 
+     *
      * @since 0.1
      * @version 0.1
-     * 
+     *
      * @param cs The command executor
      * @param cmd The command instance
      * @param string The label of the command
      * @param args The command arguments
-     * 
+     *
      * @return Command success
      */
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        
         LMCommand exec = commands.get(cmd.getName().toLowerCase().trim());
+        if (exec != null) {
+            exec.execute(sender, args);
+        }
         return false;
     }
-
 }
