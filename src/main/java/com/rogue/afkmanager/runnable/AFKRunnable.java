@@ -63,13 +63,13 @@ public class AFKRunnable implements Runnable {
                         if (config.getBoolean("afk.random.enabled")) {
                             Random gen = new Random();
                             int rad = config.getInt("afk.random.radius");
-                            p.teleport(new Location(Utils.threaded().getWorld(config.getString("afk.location.world-name")),
+                            p.teleport(new Location(Bukkit.getWorld(config.getString("afk.location.world-name")),
                                     gen.nextInt(rad - (rad * 2)) + config.getDouble("afk.location.x"),
                                     config.getDouble("afk.location.x"),
                                     gen.nextInt(rad - (rad * 2)) + config.getDouble("afk.location.z")));
                         } else {
                             p.teleport(new Location(
-                                    Utils.threaded().getWorld(config.getString("afk.location.world-name")),
+                                    Bukkit.getWorld(config.getString("afk.location.world-name")),
                                     config.getDouble("afk.location.x"),
                                     config.getDouble("afk.location.y"),
                                     config.getDouble("afk.location.z")));
