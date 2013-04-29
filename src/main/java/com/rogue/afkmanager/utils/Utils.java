@@ -25,10 +25,7 @@ import org.bukkit.Location;
  */
 public class Utils {
     
-    private static Threaded thread;
-    
     public Utils() {
-        thread = new Threaded();
     }
     
     /**
@@ -63,17 +60,5 @@ public class Utils {
             return true;
         }
         return false;
-    }
-    
-    /**
-     * Gets a class of thread-safe methods for Bukkit
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
-     * @return Threaded class
-     */
-    public static Threaded threaded() {
-        return thread;
     }
 }
