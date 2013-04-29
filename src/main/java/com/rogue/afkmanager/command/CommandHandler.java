@@ -53,7 +53,9 @@ public class CommandHandler implements CommandExecutor {
      */
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         LMCommand exec = commands.get(cmd.getName().toLowerCase().trim());
-        exec.execute(sender, args);
+        if (exec != null) {
+            exec.execute(sender, args);
+        }
         return false;
     }
 }
