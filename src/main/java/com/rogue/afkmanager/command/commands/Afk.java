@@ -27,7 +27,7 @@ import org.bukkit.command.CommandSender;
 public class Afk implements LMCommand {
 
     public boolean execute(CommandSender sender, String[] args) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
     public String getName() {
@@ -35,7 +35,6 @@ public class Afk implements LMCommand {
     }
 
     public String[] getHelp() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new String[0];
     }
-    
 }
