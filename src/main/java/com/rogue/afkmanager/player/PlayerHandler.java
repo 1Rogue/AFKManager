@@ -16,151 +16,230 @@
  */
 package com.rogue.afkmanager.player;
 
+import com.rogue.afkmanager.AFKManager;
 import java.util.HashMap;
+import java.util.logging.Level;
 import org.bukkit.Location;
 
 /**
  *
- * @since 0.1
+ * @since 1.0.0
  * @author 1Rogue
- * @version 0.1
+ * @version 1.0.0
  */
 public class PlayerHandler {
-    
-    private HashMap<String, LMPlayer> players = new HashMap<String, LMPlayer>();
-    
+
+    private final AFKManager plugin;
+    private final int timer;
+    private final int timeEnd;
+    private HashMap<String, AMPlayer> players = new HashMap<String, AMPlayer>();
+
+    public PlayerHandler(AFKManager p, int interval, int timeout) {
+        plugin = p;
+        timer = interval;
+        timeEnd = timeout;
+    }
+
     /**
      * Updates the AFK-start time for the provided player.
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The relevant player's name
      * @param time The time being AFK started
      */
     public void updatePlayer(String name, int time) {
-        LMPlayer temp = this.getPlayer(name);
+        AMPlayer temp = this.getPlayer(name);
         temp.setTime(time);
         this.putPlayer(name, temp);
     }
-    
+
     /**
      * Updates the AFK-start location for the provided player.
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The relevant player's name
      * @param place The place the player was at the start of being AFK
      */
     public void updatePlayer(String name, Location place) {
-        LMPlayer temp = this.getPlayer(name);
+        AMPlayer temp = this.getPlayer(name.toLowerCase());
         temp.setSavedLocation(place);
-        this.putPlayer(name, temp);
+        this.putPlayer(name.toLowerCase(), temp);
     }
-    
+
+    /**
+     * Updates the AFK-status for the provided player.
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
+     * @param name The relevant player's name
+     * @param afk Whether the player is AFK or not
+     */
+    public void updatePlayer(String name, boolean afk) {
+        AMPlayer temp = this.getPlayer(name.toLowerCase());
+        temp.setAFK(afk);
+        this.putPlayer(name.toLowerCase(), temp);
+    }
+
     /**
      * Adds a player to the Plugin's tracked list of players.
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The player name
      * @param time The AFK-start time
      * @param location The location when a player went AFK
      */
     public void putPlayer(String name, int time, Location location) {
-        this.putPlayer(name.toLowerCase().trim(), new LMPlayer(name.toLowerCase().trim(), time, location));
+        this.putPlayer(name.toLowerCase(), new AMPlayer(name.toLowerCase(), time, location));
     }
-    
+
     /**
-     * Adds an LMPlayer to the plugin's tracked list of players.
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     * Adds an AMPlayer to the plugin's tracked list of players.
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The player name
-     * @param player The LMPlayer object of the player
+     * @param player The AMPlayer object of the player
      */
-    public void putPlayer(String name, LMPlayer player) {
-        players.put(name.toLowerCase().trim(), player);
+    public void putPlayer(String name, AMPlayer player) {
+        players.put(name.toLowerCase(), player);
     }
-    
+
     /**
      * Removes a player from the plugin's tracked list of players
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The player name
      */
     public void remPlayer(String name) {
-        players.remove(name.toLowerCase().trim());
+        players.remove(name.toLowerCase());
     }
-    
+
     /**
      * Gets the plugin's instance of the player
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The player name
      * @return The player instance
      */
-    public LMPlayer getPlayer(String name) {
-        return players.get(name.toLowerCase().trim());
+    public AMPlayer getPlayer(String name) {
+        return players.get(name.toLowerCase());
     }
-    
+
+    /**
+     * Returns whether or not the player is AFK.
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
+     * @return AFK status
+     */
+    public boolean isAFK(String name) {
+        return players.get(name.toLowerCase()).isAFK();
+    }
+
     /**
      * Gets the time the player went AFK. 0 if they are not AFK.
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The player name
      * @return AFK Starting time for the player
      */
     public int checkTime(String name) {
-        return this.getPlayer(name).getTime();
+        return this.getPlayer(name.toLowerCase()).getTime();
     }
-    
+
     /**
      * Gets the location where the player went AFK. Returns null if they have
      * never gone AFK.
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The player name
      * @return Location where a player went AFK
      */
     public Location checkLocation(String name) {
-        return this.getPlayer(name).getSavedLocation();
+        return this.getPlayer(name.toLowerCase()).getSavedLocation();
     }
-    
+
     /**
      * Sets whether or not the player is AFK.
-     * 
-     * @since 0.1
-     * @version 0.1
-     * 
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
      * @param name The player name
      * @param value Whether or not the player is AFK
      */
     public void changeAFK(String name, boolean value) {
-        this.getPlayer(name).setAFK(value);
+        this.getPlayer(name.toLowerCase()).setAFK(value);
+    }
+
+    /**
+     * Increments the value for a player's AFK time.
+     * 
+     * @since 1.0.0
+     * @version 1.0.0
+     * 
+     * @param name The username to increment time for
+     */
+    public void incrementTime(String name) {
+        this.getPlayer(name.toLowerCase()).setTime(this.getPlayer(name.toLowerCase()).getTime() + timer);
+        if (checkTime(name) >= timeEnd) {
+            if (plugin.getDebug() >= 2) {
+                plugin.getLogger().log(Level.INFO, "Setting {0} as AFK!", name);
+            }
+            plugin.getPlayerHandler().updatePlayer(name, true);
+        }
     }
     
     /**
-     * Returns the map of all LMPlayers.
+     * Gets the timeout value for AFK management in seconds
      * 
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      * 
-     * @return Map of LMPlayers players
+     * @return The int value of the AFK timeout
      */
-    public HashMap<String, LMPlayer> getPlayers() {
-        return players;
+    public int getAFKTimeout() {
+        return timeEnd;
     }
 
+    /**
+     * Gets the interval at which the plugin checks for AFK people in seconds
+     * 
+     * @since 1.0.0
+     * @version 1.0.0
+     * 
+     * @return The int value of the AFK checking interval
+     */
+    public int getAFKCheckInterval() {
+        return timer;
+    }
+
+    /**
+     * Returns the map of all AMPlayers.
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
+     * @return Map of AMPlayers players
+     */
+    public HashMap<String, AMPlayer> getPlayers() {
+        return players;
+    }
 }

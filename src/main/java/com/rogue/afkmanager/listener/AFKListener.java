@@ -18,7 +18,7 @@ package com.rogue.afkmanager.listener;
 
 
 import com.rogue.afkmanager.AFKManager;
-import com.rogue.afkmanager.player.LMPlayer;
+import com.rogue.afkmanager.player.AMPlayer;
 import com.rogue.afkmanager.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -46,7 +46,7 @@ public class AFKListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerActivity(PlayerMoveEvent e) {
-        LMPlayer player = plugin.getPlayerHandler().getPlayer(e.getPlayer().getName());
+        AMPlayer player = plugin.getPlayerHandler().getPlayer(e.getPlayer().getName());
         if (player.isAFK()) {
             if (Utils.compare(e.getPlayer().getLocation(), null/*TODO: Needs to be the set area that the player/config specified*/)) {
                 e.getPlayer().sendMessage(ChatColor.YELLOW + "You are currently AFK. Move around to leave this area.");
@@ -61,7 +61,7 @@ public class AFKListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChat(AsyncPlayerChatEvent e) {
-        LMPlayer player = plugin.getPlayerHandler().getPlayer(e.getPlayer().getName());
+        AMPlayer player = plugin.getPlayerHandler().getPlayer(e.getPlayer().getName());
         if (player.isAFK()) {
             e.getPlayer().teleport(player.getSavedLocation());
             e.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting back.");
@@ -72,7 +72,7 @@ public class AFKListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerLogout(PlayerQuitEvent e) {
-        LMPlayer player = plugin.getPlayerHandler().getPlayer(e.getPlayer().getName());
+        AMPlayer player = plugin.getPlayerHandler().getPlayer(e.getPlayer().getName());
         if (player.isAFK()) {
             Location back = player.getSavedLocation();
             e.getPlayer().teleport(back);

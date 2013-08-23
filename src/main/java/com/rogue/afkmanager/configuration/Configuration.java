@@ -114,7 +114,10 @@ public class Configuration {
         if (!configPath.exists()) {
             AFKManager.getPlugin().saveDefaultConfig();
         }
-
+        
+        if (!config.contains("verbose")) {
+            config.set("verbose", false);
+        }
         if (!config.contains("update-check")) {
             config.set("update-check", true);
         }
@@ -125,7 +128,7 @@ public class Configuration {
             config.set("afk.timeout", 900);
         }
         if (!config.contains("afk.random.enabled")) {
-            config.set("afk.random.enabled", true);
+            config.set("afk.random.enabled", false);
         }
         if (!config.contains("afk.random.radius")) {
             config.set("afk.random.radius", 10);

@@ -51,7 +51,7 @@ public class CommandHandler implements CommandExecutor {
      * 
      * @return Command success
      */
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
         
         LMCommand exec = commands.get(cmd.getName().toLowerCase().trim());
         return false;

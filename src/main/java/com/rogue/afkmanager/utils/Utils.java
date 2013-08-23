@@ -16,6 +16,8 @@
  */
 package com.rogue.afkmanager.utils;
 
+import com.rogue.afkmanager.AFKManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 /**
@@ -60,5 +62,20 @@ public class Utils {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Sends a debug message if allowed in the configuration
+     * 
+     * @since 0.1
+     * @version 0.1
+     * 
+     * @param name The player name
+     * @param message The message
+     */
+    public static void verbose(String name, Object message) {
+        if (AFKManager.getPlugin().getConfiguration().getBoolean("verbose")) {
+            Bukkit.getPlayer(name).sendMessage(message.toString());
+        }
     }
 }

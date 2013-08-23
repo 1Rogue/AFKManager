@@ -2,6 +2,8 @@
 ##  Configuration explained
 ##         --------
 ##
+##  verbose: Sends debug output to players
+##
 ##  update-check: Whether or not to check for newer versions
 ##
 ##  afk:
@@ -13,12 +15,13 @@
 ##    location: Everything related to the afk point, can be set in-game.
 ##      worldguard: Currently not implemented, will support wg regions soon.
 ##
+verbose: false
 update-check: true
 afk:
   check-interval: 30
   timeout: 900
   random:
-    enabled: true
+    enabled: false
     radius: 10
   location:
     x: 0.0

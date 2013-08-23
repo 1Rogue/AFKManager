@@ -22,15 +22,16 @@ import com.rogue.afkmanager.listener.AFKListener;
 import com.rogue.afkmanager.player.PlayerHandler;
 import com.rogue.afkmanager.runnable.AFKRunnable;
 import com.rogue.afkmanager.runnable.UpdateRunnable;
+import java.io.File;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  *
- * @since 0.1
+ * @since 1.0.0
  * @author 1Rogue
- * @version 0.1
+ * @version 1.0.0
  */
 public class AFKManager extends JavaPlugin {
 
@@ -38,15 +39,23 @@ public class AFKManager extends JavaPlugin {
     private AFKListener listener;
     private PlayerHandler phandle;
     private CommandHandler chandle;
+    private int debug = 0;
 
     /**
      * Loads config files and checks for updates on server loading.
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      */
     @Override
     public void onLoad() {
+
+        if (!this.getDataFolder().exists()) {
+            this.getDataFolder().mkdirs();
+        }
+        if (!(new File(getDataFolder(), "config.yml").exists())) {
+            this.saveResource("config.yml", true);
+        }
         this.getLogger().log(Level.INFO, "Loading configs");
         configs = new Configuration();
         configs.loadDefaults();
@@ -62,23 +71,35 @@ public class AFKManager extends JavaPlugin {
      * Creates an instance of the permissions manager, listener, player handler,
      * command handler, and sets the AFK checking task.
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      */
     @Override
     public void onEnable() {
+        
+        debug = configs.getInt("general.debug-level");
+        if (debug > 3) {
+            debug = 3;
+        }
+        if (debug < 0) {
+            debug = 0;
+        }
+        if (debug >= 1) {
+            this.getLogger().log(Level.INFO, "Debug level set to {0}!", debug);
+        }
+        
         this.getLogger().log(Level.INFO, "Enabling Listener");
         listener = new AFKListener(this);
         Bukkit.getPluginManager().registerEvents(listener, this);
 
         this.getLogger().log(Level.INFO, "Enabling Player Handler");
-        phandle = new PlayerHandler();
+        phandle = new PlayerHandler(this, configs.getInt("afk.check-interval"), configs.getInt("afk.timeout"));
 
         this.getLogger().log(Level.INFO, "Enabling Command Handler");
         chandle = new CommandHandler();
 
         long interval = this.getConfig().getInt("afk.check-interval") * 20; // multiplied by 20, due to a server tick being 1/20th of a second
-        Bukkit.getServer().getScheduler().runTaskTimer(this, new AFKRunnable(), interval, interval);
+        Bukkit.getServer().getScheduler().runTaskTimer(this, new AFKRunnable(this), interval, interval);
 
         this.getLogger().log(Level.INFO, "{0} is enabled!", this.getName());
     }
@@ -87,19 +108,31 @@ public class AFKManager extends JavaPlugin {
      * Currently serves no purpose, will most likely stop the AFK runnable in
      * the future.
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      */
     @Override
     public void onDisable() {
         this.getLogger().log(Level.INFO, "{0} is disabled!", this.getName());
     }
+    
+    /**
+     * Gets the level of debugging for players
+     *
+     * @since 1.0.0
+     * @version 1.0.0
+     *
+     * @return The debug level
+     */
+    public int getDebug() {
+        return debug;
+    }
 
     /**
      * Gets the instance of the plugin in its entirety.
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      *
      * @return The plugin instance
      */
@@ -110,8 +143,8 @@ public class AFKManager extends JavaPlugin {
     /**
      * Gets the instance of the listener.
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      *
      * @return AFKManager's listener
      */
@@ -122,8 +155,8 @@ public class AFKManager extends JavaPlugin {
     /**
      * Gets the instance of the player handler.
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      *
      * @return AFKManager's player handler
      */
@@ -134,8 +167,8 @@ public class AFKManager extends JavaPlugin {
     /**
      * Gets the instance of the command handler.
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      *
      * @return AFKManager's command handler
      */
@@ -146,8 +179,8 @@ public class AFKManager extends JavaPlugin {
     /**
      * Gets the instance of the configuration
      *
-     * @since 0.1
-     * @version 0.1
+     * @since 1.0.0
+     * @version 1.0.0
      *
      * @return The plugin's configuration manager
      */
